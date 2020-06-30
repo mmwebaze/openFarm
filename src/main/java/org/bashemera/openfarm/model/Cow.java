@@ -1,17 +1,21 @@
 package org.bashemera.openfarm.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "cows")
 public class Cow extends Animal {
 	
 	private boolean milkable;
+	@Indexed(unique=true) //Might need to turn this off
 	private String tagId;
+	@DBRef
 	protected List<Cow> parents;
+	@DBRef
 	protected List<Cow> children;
 	
 	public Cow(String name, String gender, Date dateOfBirth, Date dateOfDeath, List<Cow> parents, List<Cow> children, String tagId) {
