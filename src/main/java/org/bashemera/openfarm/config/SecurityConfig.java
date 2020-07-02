@@ -23,8 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	OpenFarmAuthenticationSuccessHandler openFarmAuthenticationSuccessHandler;
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		/*httpSecurity.authorizeRequests()
 		.antMatchers("/").permitAll()
 		.antMatchers("/dashboard/**").hasAuthority("ADMIN")
 		.anyRequest().authenticated().
@@ -32,9 +32,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.formLogin()
 		.successHandler(openFarmAuthenticationSuccessHandler)
-		//.loginPage().permitAll()
+		//.loginPage("/login").permitAll()
 		.and()
-		.logout().permitAll();
+		.logout().permitAll();*/
+		
+		httpSecurity.authorizeRequests()
+		.anyRequest()
+     	.permitAll()
+     	.and().csrf().disable();
 	}
 	
 	@Override

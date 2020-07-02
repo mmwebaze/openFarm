@@ -2,8 +2,8 @@ package org.bashemera.openfarm.service;
 
 import java.util.List;
 
-import org.bashemera.openfarm.model.Cow;
-import org.bashemera.openfarm.repository.CowRepository;
+import org.bashemera.openfarm.model.Animal;
+import org.bashemera.openfarm.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 public class AnimalService {
 	
 	@Autowired
-	private CowRepository repository;
+	private AnimalRepository animalRepository;
 	
-	public List<Cow> getAllCows() {
+	public List<Animal> getAllAnimals() {
 		
-		return repository.findAll();
+		return animalRepository.findAll();
 	}
 	
-	public Cow addCow(String tagId, String name) {
+	public Animal addCow(String tagId, String name) {
 		//Cow cow = new Cow();
 		
 		//return repository.save(cow);
@@ -26,12 +26,12 @@ public class AnimalService {
 		return null;
 	}
 	
-	public int deleteCow(String tagId) {
-		Cow cow = repository.findByTagId(tagId);
+	public int deleteAnimal(String tagId) {
+		Animal animal = animalRepository.findByTagId(tagId);
 		
-		if (cow != null) {
+		if (animal != null) {
 			
-			repository.delete(cow);
+			animalRepository.delete(animal);
 			return 1;
 		}
 		

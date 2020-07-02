@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<body>
+  <div align="center">
+    <h2 th:text="'Succeeded adding a ' + ${animal.animalType.name}"></h2>
+    <span>name:</span><span th:text="${animal.name}"></span><br/>
+    <p><strong>Tag ID:</strong> <span th:text="${animal.tagId}"></span></p>
+    <span>Date Of Birth:</span><span th:text="${animal.dateOfBirth}"></span><br/>
+    <span>Gender:</span><span th:text="${animal.gender}"></span><br/>
+    <span>Milkable?</span><span th:text="${animal.milkable}"></span><br/>
+</div>
+<div align="center">
+    <a href="/animal">Add another animal</a>
+</div>
+</body>
+</html>
