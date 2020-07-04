@@ -3,6 +3,9 @@ package org.bashemera.openfarm.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -14,18 +17,35 @@ public class Animal {
 
 	@Id
 	private String id;
+	
+	@Size(min = 3, max = 50)
 	private String name;
-	private String gender;
+	
+	@Size(min = 1, max = 1)
+	@NotBlank
+	private String gender; //TODO change this to a char
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfBirth;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfDeath;
+	
 	@DBRef
 	private List<Animal> parents;
+	
 	@DBRef
 	private List<Animal> children;
+	
 	private boolean milkable;
+	
+	@DBRef
+	private User owner;
+	
 	@Indexed(unique=true) //Might need to turn this off
+	@NotBlank
 	private String tagId;
+	
 	@DBRef
 	private AnimalType animalType;
 	
@@ -37,7 +57,7 @@ public class Animal {
 	}
 	
 	public Animal(String name, String gender, Date dateOfBirth, Date dateOfDeath, List<Animal> parents, List<Animal> children,
-			boolean milkable, String tagId, AnimalType animalType) {
+			boolean milkable, String tagId, AnimalType animalType, User owner) {
 		super();
 		this.name = name;
 		this.gender = gender;
@@ -48,6 +68,7 @@ public class Animal {
 		this.milkable = milkable;
 		this.tagId = tagId;
 		this.animalType = animalType;
+		this.owner = owner;
 	}
 
 	public AnimalType getAnimalType() {
@@ -132,6 +153,14 @@ public class Animal {
 
 	public void setChildren(List<Animal> children) {
 		this.children = children;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 	
 }

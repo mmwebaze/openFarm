@@ -7,5 +7,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "role", path = "roles")
 public interface RoleRepository extends MongoRepository<Role, String>{
 	
-	Role findByRole(String role);
+	Role findByName(String role);
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: head">
+    <link th:href="@{/css/management/animal/list.css}" rel="stylesheet">
+  </head>
+  <body>
+    <section id=animal_list>
+      <div class="container">
+        <! -- beginning of search area ->
+        <div class = "row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <div class="search-container">
+              <form action="/management/animal/list" method="post">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+          </div>
+          <div class="col-sm-4 tryher"></div>
+        </div>
+        <! -- beginning of search result area ->
+        <div class = "row">
+          <div class="col-sm-12">
+            <table class = "table table-striped">
+              <thead>
+                <th>#</th>
+                <th>ID</th>
+                <th>Tag ID</th>
+                <th>Animal Type</th>
+                <th>Gender</th>
+                <th>DoB</th>
+                <th>DoD</th>
+              </thead>
+              <tbody>
+                <tr th:each="animal, stats : ${animals}">
+                   <td th:text="${stats.index + 1}">1</td>
+                   <td th:text="${animal.id}"></td>
+                   <td th:text="${animal.tagId}"></td>
+                   <td th:text="${animal.animalType.name}"></td>
+                   <td th:text="${animal.gender}"></td>
+                   <td th:text="${animal.dateOfBirth}"></td>
+                   <td th:text="${animal.dateOfDeath}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section th:replace="fragments/general.html :: footer"/>
+    <section th:replace="fragments/general.html :: scripts"/>
+  </body>
+  </html>

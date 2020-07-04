@@ -49,7 +49,7 @@ public class OpenFarmUserDetailsService implements UserDetailsService {
 	public void saveUser(User user) {
 	    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 	    user.setEnabled(true);
-	    Role userRole = roleRepository.findByRole("ADMIN");
+	    Role userRole = roleRepository.findByName("ADMIN");
 	    user.setRoles(new HashSet<>(Arrays.asList(userRole)));
 	    userRepository.save(user);
 	}
@@ -57,7 +57,7 @@ public class OpenFarmUserDetailsService implements UserDetailsService {
 	private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
 	    Set<GrantedAuthority> roles = new HashSet<>();
 	    userRoles.forEach((role) -> {
-	        roles.add(new SimpleGrantedAuthority(role.getRole()));
+	        roles.add(new SimpleGrantedAuthority(role.getName()));
 	    });
 
 	    List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);

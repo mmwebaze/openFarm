@@ -53,7 +53,7 @@ public class OpenFarmApplication implements CommandLineRunner {
 		animalTypeRepository.save(cow);
 		
 		AnimalType goat = new AnimalType("Goat");
-		AnimalType savedCow = animalTypeRepository.save(goat);
+		AnimalType savedGoat = animalTypeRepository.save(goat);
 		
 		AnimalType pig = new AnimalType("Pig");
 		AnimalType savedPig = animalTypeRepository.save(pig);
@@ -61,48 +61,66 @@ public class OpenFarmApplication implements CommandLineRunner {
 		System.out.println(savedPig);
 		
 		
-		Animal kyiguyi = new Animal("Kyiguyi", "M", null, null, new ArrayList<Animal>(),new ArrayList<Animal>(), false, "9890", savedCow);
-	
-		Animal kyiguyiSaved  = animalRepository.save(kyiguyi);
 		
-		Animal kyasha = new Animal("Kyasha", "F", null, null, new ArrayList<Animal>(),new ArrayList<Animal>(), true, "1234", savedCow);
 		
-		Animal kyashaSaved  = animalRepository.save(kyasha);
-		
-		System.out.println(kyashaSaved);
-		List<Animal> kyihembeParents = new ArrayList<>();
-		kyihembeParents.add(kyashaSaved);
-		kyihembeParents.add(kyiguyiSaved);
-		
-		Animal kyihembe = new Animal("Kyihembe", "F", null, null, kyihembeParents, new ArrayList<Animal>(), true, "5678", savedCow);
-		animalRepository.save(kyihembe);
-		
-		Animal mbuziM = new Animal(savedPig, "M");
-		animalRepository.save(mbuziM);
-		
-		Animal mbuziF = new Animal(savedPig, "F");
-		animalRepository.save(mbuziF);
-		
-		Role adminRole = roleRepository.findByRole("ADMIN");
+		Role adminRole = roleRepository.findByName("ADMIN");
         if (adminRole == null) {
             Role newAdminRole = new Role();
-            newAdminRole.setRole("ADMIN");
+            newAdminRole.setName("ADMIN");
             Role admin = roleRepository.save(newAdminRole);
             
+            Role newDataRole = new Role();
+            newDataRole.setName("DATA");
+            Role data = roleRepository.save(newDataRole);
+            
+            User james = new User();
+            james.setEmail("james.ngobi@unra.com");
+            james.setFirstName("Mitchel");
+            james.setLastName("Jenkins");
+            james.setPassword(bCryptPasswordEncoder.encode("12345678"));
+            Set<Role> jamesRoles = new HashSet<Role>();
+            jamesRoles.add(data);
+            james.setRoles(jamesRoles);
+            userRepository.save(james);
+            
             User mitch = new User();
-            mitch.setEmail("mitch.jenkins@gmail.com");
-            mitch.setFullname("Mitchel Jenkins");
-            mitch.setPassword(bCryptPasswordEncoder.encode("12345678"));
+            mitch.setEmail("admin@bashemera.org");
+            mitch.setFirstName("Mitchel");
+            mitch.setLastName("Jenkins");
+            mitch.setPassword(bCryptPasswordEncoder.encode("admin123"));
             Set<Role> roles = new HashSet<Role>();
+            roles.add(data);
             roles.add(admin);
             mitch.setRoles(roles);
             userRepository.save(mitch);
+            
+            Animal kyiguyi = new Animal("Kyiguyi", "M", null, null, new ArrayList<Animal>(),new ArrayList<Animal>(), false, "9890", savedGoat, mitch);
+        	
+    		Animal kyiguyiSaved  = animalRepository.save(kyiguyi);
+    		
+    		Animal kyasha = new Animal("Kyasha", "F", null, null, new ArrayList<Animal>(),new ArrayList<Animal>(), true, "1234", savedGoat, mitch);
+    		
+    		Animal kyashaSaved  = animalRepository.save(kyasha);
+    		
+    		System.out.println(kyashaSaved);
+    		List<Animal> kyihembeParents = new ArrayList<>();
+    		kyihembeParents.add(kyashaSaved);
+    		kyihembeParents.add(kyiguyiSaved);
+    		
+    		Animal kyihembe = new Animal("Kyihembe", "F", null, null, kyihembeParents, new ArrayList<Animal>(), true, "5678", savedGoat, james);
+    		animalRepository.save(kyihembe);
+    		
+    		Animal mbuziM = new Animal(savedPig, "M");
+    		animalRepository.save(mbuziM);
+    		
+    		Animal mbuziF = new Animal(savedPig, "F");
+    		animalRepository.save(mbuziF);
         }
 
-        Role userRole = roleRepository.findByRole("USER");
+        Role userRole = roleRepository.findByName("USER");
         if (userRole == null) {
             Role newUserRole = new Role();
-            newUserRole.setRole("USER");
+            newUserRole.setName("USER");
             roleRepository.save(newUserRole);
         }
 	}

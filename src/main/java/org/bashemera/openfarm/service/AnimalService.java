@@ -18,12 +18,9 @@ public class AnimalService {
 		return animalRepository.findAll();
 	}
 	
-	public Animal addCow(String tagId, String name) {
-		//Cow cow = new Cow();
+	public Animal save(Animal animal) {
 		
-		//return repository.save(cow);
-		
-		return null;
+		return animalRepository.save(animal);
 	}
 	
 	public int deleteAnimal(String tagId) {

@@ -1,0 +1,23 @@
+</<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"/>
+<body>
+  <section>
+    <div class="container">
+      <div align="center">
+        <h2 th:text="'Succeeded adding a ' + ${animal.animalType.name}"></h2>
+        <span>name:</span><span th:text="${animal.name}"></span><br/>
+        <p><strong>Tag ID:</strong> <span th:text="${animal.tagId}"></span></p>
+        <span>Date Of Birth:</span><span th:text="${animal.dateOfBirth}"></span><br/>
+        <span>Gender:</span><span th:text="${animal.gender}"></span><br/>
+        <span>Milkable?</span><span th:text="${animal.milkable}"></span><br/>
+      </div>
+      <div align="center">
+        <a href="/animal">Add another animal</a>
+      </div>
+    </div>
+  </section>
+<section th:replace="fragments.html :: footer"/>
+<section th:replace="fragments.html :: scripts"/>
+</body>
+</html>

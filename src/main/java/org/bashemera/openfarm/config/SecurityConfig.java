@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -24,9 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		/*httpSecurity.authorizeRequests()
+		httpSecurity.authorizeRequests()
 		.antMatchers("/").permitAll()
-		.antMatchers("/dashboard/**").hasAuthority("ADMIN")
+		.antMatchers("/dashboard/**").authenticated()
+		.antMatchers("/user/**").authenticated()
+		.antMatchers("/management/**").authenticated()//.hasAuthority("ADMIN")
 		.anyRequest().authenticated().
 		and()
 		.csrf().disable()
@@ -34,12 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.successHandler(openFarmAuthenticationSuccessHandler)
 		//.loginPage("/login").permitAll()
 		.and()
-		.logout().permitAll();*/
+		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 		
-		httpSecurity.authorizeRequests()
-		.anyRequest()
-     	.permitAll()
-     	.and().csrf().disable();
+		/*
+		 * httpSecurity.authorizeRequests() .anyRequest() .permitAll()
+		 * .and().csrf().disable();
+		 */
 	}
 	
 	@Override
@@ -58,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
+		System.out.println("WEB SECURITY*************************?");
 	    web
 	        .ignoring()
 	        .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");

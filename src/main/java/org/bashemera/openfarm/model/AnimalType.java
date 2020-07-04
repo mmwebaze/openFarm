@@ -1,7 +1,8 @@
 package org.bashemera.openfarm.model;
 
+import javax.validation.constraints.Size;
+
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Animal_types")
@@ -9,7 +10,7 @@ public class AnimalType {
 	
 	@Id
 	private String id;
-	@Indexed(unique=true)
+	@Size(min = 3, max = 50)
 	private String name;
 
 	public AnimalType(String name) {

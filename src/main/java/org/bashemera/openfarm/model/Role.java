@@ -1,6 +1,8 @@
 package org.bashemera.openfarm.model;
 
 
+import javax.validation.constraints.Size;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.index.IndexDirection;
@@ -12,8 +14,8 @@ public class Role {
     @Id
     private String id;
     @Indexed(unique = true, direction = IndexDirection.DESCENDING)
-
-    private String role;
+    @Size(min = 4, max = 50)
+    private String name;
 
     public String getId() {
         return id;
@@ -23,12 +25,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

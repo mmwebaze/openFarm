@@ -2,6 +2,10 @@ package org.bashemera.openfarm.model;
 
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -10,15 +14,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
 public class User {
+	
 	@Id
 	private String id;
+	
 	@Indexed(unique = true, direction = IndexDirection.DESCENDING)
+	@NotBlank
+	@Email
 	private String email;
+	
+	@Size(min = 8, max = 50)
 	private String password;
-	private String fullname;
+	
+	@Size(min = 3, max = 50)
+	private String firstName;
+	
+	@Size(min = 3, max = 50)
+	private String lastName;
+	
 	private boolean enabled;
 	@DBRef
 	private Set<Role> roles;
+	
 	public String getId() {
 		return id;
 	}
@@ -37,12 +54,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getFullname() {
-		return fullname;
-	}
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
+	
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -55,5 +67,16 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 }
