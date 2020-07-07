@@ -1,5 +1,6 @@
 package org.bashemera.openfarm.model;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
@@ -10,7 +11,9 @@ public class AnimalType {
 	
 	@Id
 	private String id;
+	
 	@Size(min = 3, max = 50)
+	@NotBlank
 	private String name;
 
 	public AnimalType(String name) {

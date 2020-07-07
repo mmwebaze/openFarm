@@ -7,10 +7,12 @@ import java.util.Set;
 
 import org.bashemera.openfarm.model.Animal;
 import org.bashemera.openfarm.model.AnimalType;
+import org.bashemera.openfarm.model.Farm;
 import org.bashemera.openfarm.model.Role;
 import org.bashemera.openfarm.model.User;
 import org.bashemera.openfarm.repository.AnimalRepository;
 import org.bashemera.openfarm.repository.AnimalTypeRepository;
+import org.bashemera.openfarm.repository.FarmRepository;
 import org.bashemera.openfarm.repository.RoleRepository;
 import org.bashemera.openfarm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,8 @@ public class OpenFarmApplication implements CommandLineRunner {
 	@Autowired
 	private AnimalTypeRepository animalTypeRepository;
 	@Autowired
+	private FarmRepository farmRepository;
+	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public static void main(String[] args) {
@@ -42,12 +46,24 @@ public class OpenFarmApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		/** Test data not to be used in production */
-		//repository.deleteAll();
+		/** TEST DAT NOT TO BE USED FOR PRODUCTION PURPOSES: Allowed roles ADMIN, MANAGER, DATA */
+		farmRepository.deleteAll();
 		roleRepository.deleteAll();
 		userRepository.deleteAll();
 		animalRepository.deleteAll();
 		animalTypeRepository.deleteAll();
+		
+		Farm rwenyina = new Farm("Rwenyina");
+		List<User> rwenyinaUsers = new ArrayList<>();
+		List<Animal> rwenyinaAnimals = new ArrayList<>();
+		//rwenyina = farmRepository.save(rwenyina);
+		System.out.println(rwenyina);
+		
+		Farm rwembogo = new Farm("Rwembogo");
+		List<User> rwembogoUsers = new ArrayList<>();
+		List<Animal> rwembogoAnimals = new ArrayList<>();
+		//rwembogo = farmRepository.save(rwembogo);
+		System.out.println(rwembogo);
 		
 		AnimalType cow = new AnimalType("Cow");
 		animalTypeRepository.save(cow);
@@ -69,6 +85,10 @@ public class OpenFarmApplication implements CommandLineRunner {
             newAdminRole.setName("ADMIN");
             Role admin = roleRepository.save(newAdminRole);
             
+            Role managerRole = new Role();
+            managerRole.setName("MANAGER");
+            managerRole = roleRepository.save(managerRole);
+            
             Role newDataRole = new Role();
             newDataRole.setName("DATA");
             Role data = roleRepository.save(newDataRole);
@@ -80,8 +100,11 @@ public class OpenFarmApplication implements CommandLineRunner {
             james.setPassword(bCryptPasswordEncoder.encode("12345678"));
             Set<Role> jamesRoles = new HashSet<Role>();
             jamesRoles.add(data);
+            jamesRoles.add(managerRole);
             james.setRoles(jamesRoles);
-            userRepository.save(james);
+            james = userRepository.save(james);
+            rwenyinaUsers.add(james);
+            rwenyina.setEmployees(rwenyinaUsers);
             
             User mitch = new User();
             mitch.setEmail("admin@bashemera.org");
@@ -90,31 +113,46 @@ public class OpenFarmApplication implements CommandLineRunner {
             mitch.setPassword(bCryptPasswordEncoder.encode("admin123"));
             Set<Role> roles = new HashSet<Role>();
             roles.add(data);
-            roles.add(admin);
+            roles.add(managerRole);
             mitch.setRoles(roles);
-            userRepository.save(mitch);
+            mitch = userRepository.save(mitch);
+            rwembogoUsers.add(mitch);
+            rwembogo.setEmployees(rwembogoUsers);
             
-            Animal kyiguyi = new Animal("Kyiguyi", "M", null, null, new ArrayList<Animal>(),new ArrayList<Animal>(), false, "9890", savedGoat, mitch);
+            Animal kyiguyi = new Animal("Kyiguyi", "M", null, null, new ArrayList<Animal>(),new ArrayList<Animal>(), false, "9890", savedGoat);
         	
-    		Animal kyiguyiSaved  = animalRepository.save(kyiguyi);
+            kyiguyi  = animalRepository.save(kyiguyi);
+            rwenyinaAnimals.add(kyiguyi);
     		
-    		Animal kyasha = new Animal("Kyasha", "F", null, null, new ArrayList<Animal>(),new ArrayList<Animal>(), true, "1234", savedGoat, mitch);
+    		Animal kyasha = new Animal("Kyasha", "F", null, null, new ArrayList<Animal>(),new ArrayList<Animal>(), true, "1234", savedGoat);
     		
-    		Animal kyashaSaved  = animalRepository.save(kyasha);
+    		kyasha  = animalRepository.save(kyasha);
+    		rwenyinaAnimals.add(kyasha);
     		
-    		System.out.println(kyashaSaved);
+    		System.out.println(kyasha);
     		List<Animal> kyihembeParents = new ArrayList<>();
-    		kyihembeParents.add(kyashaSaved);
-    		kyihembeParents.add(kyiguyiSaved);
+    		kyihembeParents.add(kyasha);
+    		kyihembeParents.add(kyiguyi);
     		
-    		Animal kyihembe = new Animal("Kyihembe", "F", null, null, kyihembeParents, new ArrayList<Animal>(), true, "5678", savedGoat, james);
-    		animalRepository.save(kyihembe);
+    		
+    		Animal kyihembe = new Animal("Kyihembe", "F", null, null, kyihembeParents, new ArrayList<Animal>(), true, "5678", savedGoat);
+    		kyihembe = animalRepository.save(kyihembe);
+    		rwenyinaAnimals.add(kyihembe);
+    		rwenyina.setAnimals(rwenyinaAnimals);
+    		
     		
     		Animal mbuziM = new Animal(savedPig, "M");
-    		animalRepository.save(mbuziM);
+    		mbuziM = animalRepository.save(mbuziM);
+    		rwembogoAnimals.add(mbuziM);
     		
     		Animal mbuziF = new Animal(savedPig, "F");
-    		animalRepository.save(mbuziF);
+    		mbuziF = animalRepository.save(mbuziF);
+    		rwembogoAnimals.add(mbuziF);
+    		rwembogo.setAnimals(rwembogoAnimals);
+    		
+    		farmRepository.save(rwenyina);
+    		farmRepository.save(rwembogo);
+    		
         }
 
         Role userRole = roleRepository.findByName("USER");

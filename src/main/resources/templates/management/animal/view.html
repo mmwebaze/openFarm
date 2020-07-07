@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="fragments/general.html :: html_head"/>
+<body>
+    <section id="profile_content">
+        <div class="container">
+            <div class="row mt-2">
+                <div class="col-sm-12">
+                    <span th:text="${id}"></span>
+                    <div align="center">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>ID: <span th:text="${id}"></span></td>
+                                <td>Tag ID: <span th:text="${animal.tagId}"></span></td>
+                                <td>Name: <span th:text="${animal.name}"></span></td>
+                                <td>Sex: <span th:text="${animal.gender}"></span></td>
+                                <td>DoB: <span th.text="${#dates.format(animal.dateOfBirth, 'MMMM dd, yyyy')}"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section th:replace="fragments/general.html :: footer"/>
+<section th:replace="fragments/general.html :: scripts"/>
+</body>
+</html>

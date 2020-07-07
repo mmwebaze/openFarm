@@ -39,9 +39,6 @@ public class Animal {
 	
 	private boolean milkable;
 	
-	@DBRef
-	private User owner;
-	
 	@Indexed(unique=true) //Might need to turn this off
 	@NotBlank
 	private String tagId;
@@ -57,7 +54,7 @@ public class Animal {
 	}
 	
 	public Animal(String name, String gender, Date dateOfBirth, Date dateOfDeath, List<Animal> parents, List<Animal> children,
-			boolean milkable, String tagId, AnimalType animalType, User owner) {
+			boolean milkable, String tagId, AnimalType animalType) {
 		super();
 		this.name = name;
 		this.gender = gender;
@@ -68,7 +65,6 @@ public class Animal {
 		this.milkable = milkable;
 		this.tagId = tagId;
 		this.animalType = animalType;
-		this.owner = owner;
 	}
 
 	public AnimalType getAnimalType() {
@@ -153,14 +149,6 @@ public class Animal {
 
 	public void setChildren(List<Animal> children) {
 		this.children = children;
-	}
-
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
 	}
 	
 }

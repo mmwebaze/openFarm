@@ -1,23 +1,38 @@
-</<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments.html :: head"/>
+<head th:replace="fragments/general :: head"/>
 <body>
   <section>
     <div class="container">
-      <div align="center">
-        <h2 th:text="'Succeeded adding a ' + ${animal.animalType.name}"></h2>
-        <span>name:</span><span th:text="${animal.name}"></span><br/>
-        <p><strong>Tag ID:</strong> <span th:text="${animal.tagId}"></span></p>
-        <span>Date Of Birth:</span><span th:text="${animal.dateOfBirth}"></span><br/>
-        <span>Gender:</span><span th:text="${animal.gender}"></span><br/>
-        <span>Milkable?</span><span th:text="${animal.milkable}"></span><br/>
+      <div class="row mt-2">
+        <div class="col-sm-12">
+          <table class="table table-borderless">
+            <thead>
+              <th><span th:text="'Succeeded adding a ' + ${animal.animalType.name}"></span></th>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>name:</strong><span th:text="${animal.name}"></span></td>
+              </tr>
+              <tr>
+                <td><strong>Tag ID:</strong> <span th:text="${animal.tagId}"></span></td>
+              </tr>
+              <tr>
+                <td><strong>Date Of Birth:</strong><span th:text="${animal.dateOfBirth}"></span></td>
+              </tr>
+              <tr>
+                <td><strong>Sex:</strong><span th:text="${animal.gender}"></span></td>
+              </tr>
+              <tr>
+                <td><a th:href="@{/management/animal/add}" class="btn btn-primary" role="button">Add another animal</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div align="center">
-        <a href="/animal">Add another animal</a>
       </div>
-    </div>
   </section>
-<section th:replace="fragments.html :: footer"/>
-<section th:replace="fragments.html :: scripts"/>
+<section th:replace="fragments/general :: footer"/>
+<section th:replace="fragments/general :: scripts"/>
 </body>
 </html>

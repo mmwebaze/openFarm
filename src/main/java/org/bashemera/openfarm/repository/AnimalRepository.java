@@ -12,5 +12,5 @@ public interface AnimalRepository extends MongoRepository<Animal, String> {
 	
 	public Animal findByTagId(@Param("tagId") String tagId);
 	public List<Animal> findByName(@Param("name") String name);
-	public List<Animal> findByOwner(@Param("ownerId") String ownerId);
+	//public List<Animal> findByOwner(@Param("ownerId") String ownerId);
 }

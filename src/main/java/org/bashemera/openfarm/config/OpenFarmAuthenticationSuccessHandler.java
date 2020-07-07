@@ -20,8 +20,11 @@ public class OpenFarmAuthenticationSuccessHandler implements AuthenticationSucce
 	    response.setStatus(HttpServletResponse.SC_OK);
 
 	    for (GrantedAuthority auth : authentication.getAuthorities()) {
-	        if ("ADMIN".equals(auth.getAuthority())) {
+	        if ("USER".equals(auth.getAuthority())) {
 	            response.sendRedirect("/dashboard");
+	        }
+	        else if ("ADMIN".equals(auth.getAuthority())) {
+	        	response.sendRedirect("/dashboard");
 	        }
 	    }
 	}

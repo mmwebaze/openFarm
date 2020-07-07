@@ -7,22 +7,35 @@
     <section id=animal_list>
       <div class="container">
         <! -- beginning of search area ->
-        <div class = "row">
-          <div class="col-sm-4"></div>
+        <div class = "row mt-2">
+          <div class="col-sm-4">
+            <a th:href="@{/management/animal/add}" class="btn btn-primary" role="button">Add Animal</a>
+          </div>
           <div class="col-sm-4">
             <div class="search-container">
               <form action="/management/animal/list" method="post">
-                <input type="text" placeholder="Search.." name="search">
-                <button type="submit">Submit</button>
+                <div class="form-group">
+                  <input type="text" placeholder="Search.." name="search" class="form-control">
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="search_filter" id="search_by_id" value="id" checked>
+                  <label class="form-check-label" for="search_filter">ID</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="search_filter" id="search_by_tagId" value="tagId">
+                  <label class="form-check-label" for="search_by_tagId">Tag ID</label>
+                </div>
+                <button type="button" class="btn btn-primary">Submit</button>
               </form>
             </div>
           </div>
-          <div class="col-sm-4 tryher"></div>
+          <div class="col-sm-4"></div>
         </div>
+        <div></div>
         <! -- beginning of search result area ->
-        <div class = "row">
+        <div class = "row mt-2">
           <div class="col-sm-12">
-            <table class = "table table-striped">
+            <table class = "table thead-light">
               <thead>
                 <th>#</th>
                 <th>ID</th>
@@ -34,8 +47,8 @@
               </thead>
               <tbody>
                 <tr th:each="animal, stats : ${animals}">
-                   <td th:text="${stats.index + 1}">1</td>
-                   <td th:text="${animal.id}"></td>
+                   <td><input type="checkbox" name="" th:value="${animal.id}"></td>
+                   <td><a th:href="@{/management/animal/view/{id}(id=${animal.id})}" th:text="${animal.id}"></a></td>
                    <td th:text="${animal.tagId}"></td>
                    <td th:text="${animal.animalType.name}"></td>
                    <td th:text="${animal.gender}"></td>

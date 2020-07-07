@@ -5,38 +5,38 @@
 		<header></header>
 		<section>
 			<div class="container">
-				<div align="center">
-					<form th:action="@{/animal}" th:object="${animal}" method="post">
-						<div>
-							<label>Animal Type:</label>
-			        <select th:field="*{animalType}">
-			            <option th:each="animalType : ${animalTypes}" th:value="${animalType.id}" th:text="${animalType.name}" />
+				<div class="col-sm-12">
+					<form th:action="@{/management/animal/add}" th:object="${animal}" method="post">
+						<div class="form-group">
+							<label class="form-check-label" for="animal_type">Animal Type:</label>
+			        <select th:field="*{animalType}" name="animal_type">
+			            <option th:each="animalType : ${animalTypes}" th:value="${animalType.id}" th:text="${animalType.name}" id="animal_type">
 			        </select>
 						</div>
-						<div>
-							<label>Animal name:</label>
-							<input type="text" class="form-control" th:field="*{name}"><br/>
+						<div class="form-group">
+							<label class="form-check-label" for="animal_name">Animal name:</label>
+							<input type="text" class="form-control" th:field="*{name}" id="animal_name" name="animal_name">
 						</div>
-						<div>
-							<label>Tag ID:</label>
-							<input type="text" class="form-control" th:field="*{tagId}"><br/>
+						<div class="form-group">
+							<label class="form-check-label" for="animal_tagId">Tag ID:</label>
+							<input type="text" class="form-control" th:field="*{tagId}" id="animal_tagId" name="animal_tagId">
 							<span th:if="${#fields.hasErrors('tagId')}" th:errors="*{tagId}">Tag Id errors</span>
 						</div>
-						<div>
-							<label>Date of birth ((yyyy-mm-dd):</label>
-							<input type="text" class="form-control" th:field="*{dateOfBirth}"><br/>
+						<div class="form-group">
+							<label class="form-check-label" for="animal_dob">Date of birth (yyyy-mm-dd):</label>
+							<input type="datetime-local" class="form-control" th:field="*{dateOfBirth}" id="animal_dob" name="animal_dob">
 						</div>
-						<div>
-							<label>Animal sex:</label>
-							<input type="radio" th:field="*{gender}" value="M" />Male
-							<input type="radio" th:field="*{gender}" value="F" />Female<br/>
+						<div class="form-check form-check-inline">
+							<label class="form-check-label" for="animal_sex">Animal sex:</label>
+							<input class="form-check-input" type="radio" th:field="*{gender}" value="M" name="animal_sex"/>Male
+							<input class="form-check-input" type="radio" th:field="*{gender}" value="F" name="animal_sex" checked/>Female
 						</div>
-						<div>
-							<label>Can the animal be milked?:</label>
-							<input class="form-check-input" type="checkbox" th:field="*{milkable}" id="milkable">
+						<div class="form-group">
+							<label class="form-check-label" for="milkable">Can the animal be milked?:</label>
+							<input class="form-check-input" type="checkbox" th:field="*{milkable}" id="milkable" name="animal_milkable">
 						</div>
 		        <div>
-							<button type="submit">Add Animal</button>
+							<button type="submit"  class="btn btn-primary">Add Animal</button>
 						</div>
 					</form>
 				</div>

@@ -1,6 +1,7 @@
 package org.bashemera.openfarm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.bashemera.openfarm.model.Animal;
 import org.bashemera.openfarm.repository.AnimalRepository;
@@ -18,6 +19,13 @@ public class AnimalService {
 		return animalRepository.findAll();
 	}
 	
+	/*
+	 * public List<Animal> getAllAnimalsByOwner(String ownerId){
+	 * 
+	 * 
+	 * return animalRepository.findByOwner(ownerId); }
+	 */
+	
 	public Animal save(Animal animal) {
 		
 		return animalRepository.save(animal);
@@ -33,5 +41,16 @@ public class AnimalService {
 		}
 		
 		return -1;
+	}
+
+	public Animal getAnimalById(String id) {
+		
+		Optional<Animal> optionalEntity =  animalRepository.findById(id);
+		
+		if (optionalEntity.isPresent()) {
+			
+			return optionalEntity.get();
+		}
+		return null;
 	}
 }
