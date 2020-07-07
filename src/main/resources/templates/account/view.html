@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/general :: html_head"/>
+<body>
+    <section id="profile_content">
+        <div class="container">
+            <div class="row mt-2">
+                <div class="col-sm-12">
+                    <span th:text="${id}"></span>
+                    <div align="center">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>Account ID: <span th:text="${farm.id}"></span></td>
+                                <td>Account Code: <span th:text="${farm.code} ?: ''"></span></td>
+                                <td>Name: <span th:text="${farm.name}"></span></td>
+                                <!-- <td>Creation Date: <span th:text="${farm.gender}"></span></td> -->
+                                <!-- <td>DoB: <span th.text="${#dates.format(animal.dateOfBirth, 'MMMM dd, yyyy')}"></span></td> -->
+                            </tr>
+                            <tr colspan="3">
+                                <td>Employees:
+                                    <ul>
+                                        <li th:each="employee : ${farm.employees}">
+                                            <a th:href="@{/user/{id}(id=${employee.id})}" th:text="${employee.firstName} +' ' + ${employee.lastName}"></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr colspan="3">
+                                <td>Animals:
+                                    <ul>
+                                        <li th:each="animal : ${farm.animals}">
+                                            <a th:href="@{/management/animal/view/{id}(id=${animal.id})}" th:text="'Tag id: '+${animal.tagId} +' ('+ ${animal.id} +') ' + ${animal.animalType.name}"></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section th:replace="fragments/general :: footer"/>
+<section th:replace="fragments/general :: scripts"/>
+</body>
+</html>

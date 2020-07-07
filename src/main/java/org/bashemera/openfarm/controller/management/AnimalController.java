@@ -34,7 +34,7 @@ public class AnimalController {
 	@Autowired
 	private AnimalService animalService;
 	
-	@RequestMapping(value = "/management/animal/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/management/animal/create", method = RequestMethod.GET)
 	public String createAnimalForm(Model model) {
 		
 		Animal animal = new Animal();
@@ -47,10 +47,10 @@ public class AnimalController {
 		
 		model.addAttribute("title", "Add animal");
 		
-		return "management/animal/add";
+		return "management/animal/create";
 	}
 	
-	@RequestMapping(value = "/management/animal/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/management/animal/create", method = RequestMethod.POST)
     public String saveAnimalSubmission(@Valid @ModelAttribute("animal") Animal animal, BindingResult bindingResult, Principal principal, Model model) {
 		
 		if (bindingResult.hasErrors()) {
@@ -62,7 +62,7 @@ public class AnimalController {
 			model.addAttribute("animalTypes", animalTypes);
 			model.addAttribute("title", "Animal saved");
 			
-			return "management/animal/add";
+			return "management/animal/create";
 		}
 		
 		//User currentLoggedInUser = userService.findByEmail(principal.getName());
@@ -78,7 +78,7 @@ public class AnimalController {
 
         System.out.println(animal);
 
-        return "management/animal/added_result";
+        return "management/animal/create_result";
     }
 	
 	@RequestMapping(value = "/management/animal/list", method = RequestMethod.GET)

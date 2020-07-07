@@ -1,12 +1,12 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/general.html :: head"/>
+<head th:replace="fragments/general :: head"/>
 	<body>
 		<header></header>
 		<section>
 			<div class="container">
 				<div class="col-sm-12">
-					<form th:action="@{/management/animal/add}" th:object="${animal}" method="post">
+					<form th:action="@{/management/animal/create}" th:object="${animal}" method="post">
 						<div class="form-group">
 							<label class="form-check-label" for="animal_type">Animal Type:</label>
 			        <select th:field="*{animalType}" name="animal_type">
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 		</section>
-		<section th:replace="fragments/general.html :: footer"/>
-	  <section th:replace="fragments/general.html :: scripts"/>
+		<section th:replace="fragments/general :: footer"/>
+	  <section th:replace="fragments/general :: scripts"/>
 	</body>
 </html>

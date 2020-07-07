@@ -40,4 +40,14 @@ public class FarmService {
 		}
 		return null;
 	}
+	
+	public Farm findByEmployees(String id) {
+		
+		Farm farm = farmRepository.findByEmployees(id);
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		
+		System.out.println(farm);
+		
+		return farm;
+	}
 }

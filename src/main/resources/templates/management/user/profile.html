@@ -6,8 +6,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div align="center">
+                    <div>
                         <form th:action="@{/user}" th:object="${user}" method="post">
+                            <div>
+                                <label>ID:</label>
+                                <input readonly="readonly" type="text" class="form-control" th:field="*{id}"><br/>
+                            </div>
                             <div>
                                 <label>Email:</label>
                                 <input readonly="readonly" type="text" class="form-control" th:field="*{email}"><br/>

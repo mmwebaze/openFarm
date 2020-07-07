@@ -53,13 +53,13 @@ public class OpenFarmApplication implements CommandLineRunner {
 		animalRepository.deleteAll();
 		animalTypeRepository.deleteAll();
 		
-		Farm rwenyina = new Farm("Rwenyina");
+		Farm rwenyina = new Farm("Rwenyina", "RWE");
 		List<User> rwenyinaUsers = new ArrayList<>();
 		List<Animal> rwenyinaAnimals = new ArrayList<>();
 		//rwenyina = farmRepository.save(rwenyina);
 		System.out.println(rwenyina);
 		
-		Farm rwembogo = new Farm("Rwembogo");
+		Farm rwembogo = new Farm("Rwembogo", "RWEM");
 		List<User> rwembogoUsers = new ArrayList<>();
 		List<Animal> rwembogoAnimals = new ArrayList<>();
 		//rwembogo = farmRepository.save(rwembogo);

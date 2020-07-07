@@ -30,7 +30,10 @@ public class UserController {
 	public String profile(Principal principal, Model model, @PathVariable(name = "id", required = false) String id) {
 		
 		User currentLoggedInUser = userService.findByEmail(principal.getName());
+		String currentLoggedUserId = currentLoggedInUser.getId();
+		model.addAttribute("title", currentLoggedInUser.getFirstName()+" "+currentLoggedInUser.getLastName());
 		
+		//if id empty display currently logged in user
 		if (StringUtils.isEmpty(id)) {
 	        id = "default";
 	        System.out.println("Id "+id);
@@ -40,35 +43,45 @@ public class UserController {
 			
 			return "management/user/profile";
 	    }
-		
-		User user = userService.findById(id);
-		
-		if (user == null) {
+		else {
+			//if supplied id is the same as logged in user's, display current user's profile
+			if (currentLoggedUserId.equals(id)) {
+				
+				model.addAttribute("user", currentLoggedInUser);
+				model.addAttribute("roles", currentLoggedInUser.getRoles());
+				
+				return "management/user/profile";
+			}
 			
-			model.addAttribute("user", currentLoggedInUser);
-			model.addAttribute("roles", currentLoggedInUser.getRoles());
+			User user = userService.findById(id);
+			//Check if supplied user is associated with a user. If not display currently logged in user's profile
+			if (user == null) {
+				
+				model.addAttribute("user", currentLoggedInUser);
+				model.addAttribute("roles", currentLoggedInUser.getRoles());
+				
+				return "management/user/profile";
+			}
 			
-			return "management/user/profile";
-		}
-		
-		//start checking 
-		if (roleService.hasRole(currentLoggedInUser, "ADMIN")){
-			System.out.println("###################################");
+			//if supplied user id is associated with a user who isn't the current user, check if currently logged user has ADMIN rights to view the profile
+			if (roleService.hasRole(currentLoggedInUser, "ADMIN")){
+				System.out.println("###################################");
+				//User user = optionalEntity.get();
+				model.addAttribute("user", user);
+				model.addAttribute("roles", user.getRoles());
+				
+				return "management/user/profile";
+			}
+			//System.out.println(optionalEntity.isPresent());
+			System.out.println("++++++++++++++++++++++++++++++++");
 			//User user = optionalEntity.get();
-			model.addAttribute("user", user);
-			model.addAttribute("roles", user.getRoles());
 			
-			return "management/user/profile";
+			
+			System.out.println("Id "+id);
+			System.out.println(principal.getName());
+			
+			return "system/access_denied";
 		}
-		//System.out.println(optionalEntity.isPresent());
-		System.out.println("++++++++++++++++++++++++++++++++");
-		//User user = optionalEntity.get();
-		
-		
-		System.out.println("Id "+id);
-		System.out.println(principal.getName());
-		
-		return "system/access_denied";
 	}
 	
 	@RequestMapping(value = "/management/user/create", method = RequestMethod.GET)

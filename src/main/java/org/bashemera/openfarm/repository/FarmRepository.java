@@ -8,4 +8,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface FarmRepository extends MongoRepository<Farm, String> {
 	
 	public Farm findByName(String name);
+	public Farm findByEmployees(String id);
 }
