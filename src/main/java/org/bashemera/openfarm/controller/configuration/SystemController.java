@@ -1,5 +1,7 @@
 package org.bashemera.openfarm.controller.configuration;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.bashemera.openfarm.model.Config;
@@ -11,34 +13,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class ConfigurationController {
+public class SystemController {
 	
-	@RequestMapping(value = "/admin/config/user", method = RequestMethod.GET)
-	public String userConfiguration() {
+	@RequestMapping(value = "/system/access_denied", method = RequestMethod.GET)
+	public String farmConfiguration() {
 		
 		
-		return "configuration/config";
+		return "system/access_denied";
 	}
 	
-	@RequestMapping(value = "/admin/config/user", method = RequestMethod.POST)
-    public String saveUserConfiguration(@Valid @ModelAttribute("config") Config config, BindingResult bindingResult, Model model) {
+	/*@RequestMapping(value = "/admin/config/user", method = RequestMethod.POST)
+    public String saveFarmConfiguration(@Valid @ModelAttribute("config") Config config, BindingResult bindingResult, Model model) {
 		
 		if (!bindingResult.hasErrors()) {
 			//save configurations
 			
-			return "configuration/user_config";
+			return "configuration/farm_config";
 		}
 		
-		return "configuration/user_config";
+		return "configuration/farm_config";
 		
-	}
+	}*/
 	
 	@RequestMapping(value = "/admin/system/config", method = RequestMethod.GET)
-	public String systemConfiguration() {
+	public String systemConfiguration(Principal principal, Model model) {
 		
 		//check user has admin role
 		
-		return "configuration/config";
+		return "system/view";
 	}
 	
 	@RequestMapping(value = "/admin/system/config", method = RequestMethod.POST)
@@ -49,7 +51,7 @@ public class ConfigurationController {
 		if (!bindingResult.hasErrors()) {
 			//save configurations
 			
-			return "configuration/system_config";
+			return "system/edit";
 		}
 		
 		return "configuration/system_config";

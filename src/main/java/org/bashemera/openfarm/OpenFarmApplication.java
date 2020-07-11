@@ -114,8 +114,8 @@ public class OpenFarmApplication implements CommandLineRunner {
             mitch.setEnabled(true);
             mitch.setPassword(bCryptPasswordEncoder.encode("admin123"));
             Set<Role> roles = new HashSet<Role>();
-            roles.add(data);
-            roles.add(managerRole);
+            //roles.add(data);
+            roles.add(admin);
             mitch.setRoles(roles);
             mitch = userRepository.save(mitch);
             rwembogoUsers.add(mitch);

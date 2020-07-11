@@ -22,7 +22,7 @@ public class UserController {
 	@Autowired
 	private RoleService roleService;
 	
-	@RequestMapping(value = {"/user/{id}", "/user" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/management/user/{id}", "/user" }, method = RequestMethod.GET)
 	public String profile(Principal principal, Model model, @PathVariable(name = "id", required = false) String id) {
 		
 		User currentLoggedInUser = userService.findByEmail(principal.getName());

@@ -1,5 +1,6 @@
 package org.bashemera.openfarm.config;
 
+import org.bashemera.openfarm.service.security.OpenFarmAccessDeniedHandler;
 import org.bashemera.openfarm.service.security.OpenFarmUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -29,14 +31,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/").permitAll()
 		.antMatchers("/account/create").permitAll()
 		.antMatchers("/dashboard/**").authenticated()
-		.antMatchers("/user/**").authenticated()
-		.antMatchers("/management/**").authenticated()//.hasAuthority("ADMIN")
-		.anyRequest().authenticated().
-		and()
+		.antMatchers("/management/user/**").hasAuthority("MANAGER")
+		.antMatchers("/admin/**").hasAuthority("ADMIN")
+		.antMatchers("/management/**").hasAuthority("MANAGER")//.hasAuthority("ADMIN")
+		.anyRequest().authenticated()
+		.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+		//.and().exceptionHandling().accessDeniedPage("/system/access_denied")
+		.and()
 		.csrf().disable()
 		.formLogin()
 		.successHandler(openFarmAuthenticationSuccessHandler)
-		//.loginPage("/login").permitAll()
+		.loginPage("/login").permitAll()
 		.and()
 		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 		
@@ -66,6 +71,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    web
 	        .ignoring()
 	        .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+	}
+	
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler(){
+	    return new OpenFarmAccessDeniedHandler();
 	}
 	
 //	protected void configure(HttpSecurity http) throws Exception {

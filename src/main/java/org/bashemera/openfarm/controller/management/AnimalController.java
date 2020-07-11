@@ -81,7 +81,7 @@ public class AnimalController {
 
         System.out.println(animal);
 
-        return "management/animal/cZ_result";
+        return "management/animal/create_result";
     }
 	
 	@RequestMapping(value = "/management/animal/list", method = RequestMethod.GET)
