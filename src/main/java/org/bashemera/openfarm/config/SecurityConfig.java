@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.authorizeRequests()
 		.antMatchers("/").permitAll()
+		.antMatchers("/account/create").permitAll()
 		.antMatchers("/dashboard/**").authenticated()
 		.antMatchers("/user/**").authenticated()
 		.antMatchers("/management/**").authenticated()//.hasAuthority("ADMIN")

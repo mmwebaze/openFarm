@@ -1,1 +1,64 @@
 <!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/general :: html_head"/>
+<body>
+    <section id="profile_content">
+        <div class="container">
+            <div class="row mt-2">
+                <div class="col-sm-12">
+                    <table class = "table thead-light">
+                        <thead>
+                            <th>Account Details</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span>Account name:</span>
+                                </td>
+                                <td>
+                                    <span th:text="${account.name}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Account code:</span>
+                                </td>
+                                <td>
+                                    <span th:text="${account.code}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Account email:</span>
+                                </td>
+                                <td>
+                                    <span th:text="${account.email}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Manager First Name:</span>
+                                </td>
+                                <td>
+                                    <span th:text="${account.firstName}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Manager Last Name:</span>
+                                </td>
+                                <td>
+                                    <span th:text="${account.lastName}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section th:insert="fragments/general :: footer"/>
+<section th:insert="fragments/general :: scripts"/>
+</body>
+</html>

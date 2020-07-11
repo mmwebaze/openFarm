@@ -3,8 +3,8 @@ package org.bashemera.openfarm.controller.management;
 import java.security.Principal;
 
 import org.bashemera.openfarm.model.User;
-import org.bashemera.openfarm.service.RoleService;
-import org.bashemera.openfarm.service.UserService;
+import org.bashemera.openfarm.service.RoleManager;
+import org.bashemera.openfarm.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +21,10 @@ public class UserController {
 	 * @Autowired private UserRepository userRepository;
 	 */
 	@Autowired
-	private UserService userService;
+	private UserManager userService;
 	//to be replaced by user service
 	@Autowired
-	private RoleService roleService;
+	private RoleManager roleService;
 	
 	@RequestMapping(value = {"/user/{id}", "/user" }, method = RequestMethod.GET)
 	public String profile(Principal principal, Model model, @PathVariable(name = "id", required = false) String id) {
