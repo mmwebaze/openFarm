@@ -10,6 +10,8 @@ import org.bashemera.openfarm.model.Role;
 import org.bashemera.openfarm.model.User;
 import org.bashemera.openfarm.repository.RoleRepository;
 import org.bashemera.openfarm.repository.UserRepository;
+import org.bashemera.openfarm.service.RoleService;
+import org.bashemera.openfarm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,19 +25,21 @@ import org.springframework.stereotype.Service;
 public class OpenFarmUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	@Autowired
-	private RoleRepository roleRepository;
+	private RoleService roleService;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		
-		User user = userRepository.findByEmail(email);
+		//User user = userService.findByEmail(email);
+		User user = userService.findByEmailAndEnabled(email, true);
+		System.out.println(user);
 		if(user != null) {
 			List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
-			return buildUserForAuthentication(user, authorities);
+			return buildUserForAuthentication(user, user.isEnabled(), authorities);
 		}
 		else {
 			throw new UsernameNotFoundException("username not found");
@@ -43,15 +47,15 @@ public class OpenFarmUserDetailsService implements UserDetailsService {
 	}
 	
 	public User findUserByEmail(String email) {
-	    return userRepository.findByEmail(email);
+	    return userService.findByEmail(email);
 	}
 	
 	public void saveUser(User user) {
 	    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 	    user.setEnabled(true);
-	    Role userRole = roleRepository.findByName("ADMIN");
+	    Role userRole = roleService.findByName("ADMIN");
 	    user.setRoles(new HashSet<>(Arrays.asList(userRole)));
-	    userRepository.save(user);
+	    userService.save(user);
 	}
 	
 	private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
@@ -64,8 +68,7 @@ public class OpenFarmUserDetailsService implements UserDetailsService {
 	    return grantedAuthorities;
 	}
 	
-	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-	    return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+	private UserDetails buildUserForAuthentication(User user, boolean isEnabled, List<GrantedAuthority> authorities) {
+	    return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), isEnabled, true, true, true, authorities);
 	}
-
 }

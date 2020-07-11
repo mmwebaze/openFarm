@@ -97,6 +97,7 @@ public class OpenFarmApplication implements CommandLineRunner {
             james.setEmail("james.ngobi@unra.com");
             james.setFirstName("Mitchel");
             james.setLastName("Jenkins");
+            james.setEnabled(true);
             james.setPassword(bCryptPasswordEncoder.encode("12345678"));
             Set<Role> jamesRoles = new HashSet<Role>();
             jamesRoles.add(data);
@@ -110,6 +111,7 @@ public class OpenFarmApplication implements CommandLineRunner {
             mitch.setEmail("admin@bashemera.org");
             mitch.setFirstName("Mitchel");
             mitch.setLastName("Jenkins");
+            mitch.setEnabled(true);
             mitch.setPassword(bCryptPasswordEncoder.encode("admin123"));
             Set<Role> roles = new HashSet<Role>();
             roles.add(data);
@@ -161,6 +163,10 @@ public class OpenFarmApplication implements CommandLineRunner {
             newUserRole.setName("USER");
             roleRepository.save(newUserRole);
         }
+        
+        User user = userRepository.findByEmailAndEnabled("james.ngobi@unra.com", true);
+        
+        System.out.println(user);
 	}
 
 }

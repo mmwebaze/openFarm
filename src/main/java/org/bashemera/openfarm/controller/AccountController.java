@@ -1,21 +1,15 @@
 package org.bashemera.openfarm.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.bashemera.openfarm.exception.AccountCreationException;
 import org.bashemera.openfarm.form.AccountForm;
 import org.bashemera.openfarm.model.Farm;
-import org.bashemera.openfarm.model.Role;
 import org.bashemera.openfarm.model.User;
 import org.bashemera.openfarm.service.AccountService;
 import org.bashemera.openfarm.service.FarmService;
-import org.bashemera.openfarm.service.RoleService;
 import org.bashemera.openfarm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

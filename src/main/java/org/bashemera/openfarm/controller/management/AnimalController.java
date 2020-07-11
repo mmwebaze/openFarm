@@ -8,8 +8,11 @@ import javax.validation.Valid;
 import org.bashemera.openfarm.model.Animal;
 import org.bashemera.openfarm.model.AnimalType;
 import org.bashemera.openfarm.service.AnimalManager;
+import org.bashemera.openfarm.service.AnimalService;
 import org.bashemera.openfarm.service.AnimalTypeManager;
+import org.bashemera.openfarm.service.AnimalTypeService;
 import org.bashemera.openfarm.service.UserManager;
+import org.bashemera.openfarm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +29,13 @@ public class AnimalController {
 	//@Autowired
 	//private AnimalTypeRepository animalTypeRepository;
 	@Autowired
-	private UserManager userService;
+	private UserService userService;
 	
 	@Autowired
-	private AnimalTypeManager animalTypeService;
+	private AnimalTypeService animalTypeService;
 	
 	@Autowired
-	private AnimalManager animalService;
+	private AnimalService animalService;
 	
 	@RequestMapping(value = "/management/animal/create", method = RequestMethod.GET)
 	public String createAnimalForm(Model model) {

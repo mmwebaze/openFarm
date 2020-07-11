@@ -44,4 +44,10 @@ public class UserManager implements UserService{
 		
 		return userRepository.save(user);
 	}
+	
+	@Override
+	public User findByEmailAndEnabled(String email, boolean isEnabled) {
+		
+		return userRepository.findByEmailAndEnabled(email, isEnabled);
+	}
 }

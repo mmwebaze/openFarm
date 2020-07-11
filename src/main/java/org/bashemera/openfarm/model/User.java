@@ -79,4 +79,10 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
+	@Override
+	public String toString() {
+		return "User [email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", enabled=" + enabled
+				+ "]";
+	}
 }

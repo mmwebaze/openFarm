@@ -31,7 +31,7 @@ public class AccountManager implements AccountService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
-	//@Transactional
+	@Transactional
 	public int createAccount(AccountForm account) throws AccountCreationException {
 		
 		List<User> accountUsers = new ArrayList<>();
