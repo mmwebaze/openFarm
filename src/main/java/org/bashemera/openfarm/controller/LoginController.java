@@ -1,8 +1,12 @@
 package org.bashemera.openfarm.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.bashemera.openfarm.model.Config;
 import org.bashemera.openfarm.model.User;
+import org.bashemera.openfarm.service.ConfigService;
+import org.bashemera.openfarm.service.LoggerService;
 import org.bashemera.openfarm.service.security.OpenFarmUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,13 +22,30 @@ public class LoginController {
 	@Autowired
 	private OpenFarmUserDetailsService userService;
 	
+	@Autowired
+	LoggerService loggerService;
+	
+	@Autowired
+	private ConfigService configService;
+	
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model, String error, String logout) {
-		System.out.println("HEY LOG THIS FOR ME");
+	public String login(Model model, String error, String logout, HttpServletRequest request) {
+		
+		/*
+		 * Config config = configService.getConfig();
+		 * 
+		 * if (config == null) {
+		 * 
+		 * return "redirect:/install"; }
+		 */
+		
 		model.addAttribute("title", "Please sign in");
 		
-		if (error != null)
-            model.addAttribute("errorMsg", "Your username and password are invalid.");
+		if (error != null) {
+			loggerService.warn("Failed login attempt from: " + request.getRemoteAddr(), LoginController.class);
+			model.addAttribute("errorMsg", "Your username and password are invalid.");
+		}
 
         if (logout != null)
             model.addAttribute("msg", "You have been logged out successfully.");
@@ -62,16 +83,4 @@ public class LoginController {
 	    }
 	    return modelAndView;
 	}
-	
-	/*
-	 * @RequestMapping(value = "/dashboard", method = RequestMethod.GET) public
-	 * ModelAndView dashboard() { ModelAndView modelAndView = new ModelAndView();
-	 * Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	 * User user = userService.findUserByEmail(auth.getName());
-	 * modelAndView.addObject("currentUser", user);
-	 * modelAndView.addObject("fullName", "Welcome " + user.getFirstName());
-	 * modelAndView.addObject("adminMessage",
-	 * "Content Available Only for Users with Admin Role");
-	 * modelAndView.setViewName("dashboard"); return modelAndView; }
-	 */
 }

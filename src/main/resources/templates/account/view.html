@@ -20,7 +20,7 @@
                                 <td>Employees:
                                     <ul>
                                         <li th:each="employee : ${farm.employees}">
-                                            <a th:href="@{/user/{id}(id=${employee.id})}" th:text="${employee.firstName} +' ' + ${employee.lastName}"></a>
+                                            <a th:href="@{/management/user/{id}(id=${employee.id})}" th:text="${employee.firstName} +' ' + ${employee.lastName}"></a>
                                         </li>
                                     </ul>
                                 </td>

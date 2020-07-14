@@ -49,6 +49,14 @@ public class Role {
         this.name = name.toUpperCase();
     }
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	@Override
 	public String toString() {
 		return "Role [id=" + id + ", name=" + name + ", code=" + code + "]";

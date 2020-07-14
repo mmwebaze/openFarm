@@ -1,9 +1,7 @@
 package org.bashemera.openfarm.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.bashemera.openfarm.exception.AccountCreationException;
 import org.bashemera.openfarm.form.AccountForm;
@@ -36,7 +34,7 @@ public class AccountManager implements AccountService {
 		
 		List<User> accountUsers = new ArrayList<>();
 		
-		Set<Role> newActRoles = new HashSet<Role>(); 
+		//Set<Role> newActRoles = new HashSet<Role>(); 
 		
 		Role managerRole = roleService.findByName("MANAGER");
 		
@@ -44,14 +42,14 @@ public class AccountManager implements AccountService {
 			throw new AccountCreationException("The role MANAGER does not exsist");
 		}
 		
-		newActRoles.add(managerRole);
+		//newActRoles.add(managerRole);
 		  
 		User user = new User(); 
 		user.setFirstName(account.getFirstName());
 		user.setLastName(account.getLastName()); 
 		user.setEmail(account.getEmail());
 		user.setEnabled(false); 
-		user.setRoles(newActRoles);
+		user.setRole(managerRole);
 		user.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
 		user = userService.save(user);
 		

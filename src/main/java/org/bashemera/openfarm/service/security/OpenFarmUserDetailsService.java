@@ -1,15 +1,12 @@
 package org.bashemera.openfarm.service.security;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.bashemera.openfarm.model.Role;
 import org.bashemera.openfarm.model.User;
-import org.bashemera.openfarm.repository.RoleRepository;
-import org.bashemera.openfarm.repository.UserRepository;
 import org.bashemera.openfarm.service.RoleService;
 import org.bashemera.openfarm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +35,7 @@ public class OpenFarmUserDetailsService implements UserDetailsService {
 		User user = userService.findByEmailAndEnabled(email, true);
 		System.out.println(user);
 		if(user != null) {
-			List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
+			List<GrantedAuthority> authorities = getUserAuthority(user.getRole());
 			return buildUserForAuthentication(user, user.isEnabled(), authorities);
 		}
 		else {
@@ -54,15 +51,13 @@ public class OpenFarmUserDetailsService implements UserDetailsService {
 	    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 	    user.setEnabled(true);
 	    Role userRole = roleService.findByName("ADMIN");
-	    user.setRoles(new HashSet<>(Arrays.asList(userRole)));
+	    user.setRole(userRole);
 	    userService.save(user);
 	}
 	
-	private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
+	private List<GrantedAuthority> getUserAuthority(Role userRole) {
 	    Set<GrantedAuthority> roles = new HashSet<>();
-	    userRoles.forEach((role) -> {
-	        roles.add(new SimpleGrantedAuthority(role.getName()));
-	    });
+	    roles.add(new SimpleGrantedAuthority(userRole.getName()));
 
 	    List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
 	    return grantedAuthorities;

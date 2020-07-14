@@ -1,7 +1,5 @@
 package org.bashemera.openfarm.model;
 
-import java.util.Set;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -33,8 +31,13 @@ public class User {
 	private String lastName;
 	
 	private boolean enabled;
+	
 	@DBRef
-	private Set<Role> roles;
+	private Role role;
+	
+	/*
+	 * @DBRef private Set<Role> roles;
+	 */
 	
 	public String getId() {
 		return id;
@@ -61,12 +64,11 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	public Set<Role> getRoles() {
-		return roles;
-	}
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+
+	/*
+	 * public Set<Role> getRoles() { return roles; } public void setRoles(Set<Role>
+	 * roles) { this.roles = roles; }
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
@@ -79,10 +81,41 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", enabled=" + enabled
-				+ "]";
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", enabled=" + enabled + ", role=" + role + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
 	}
 }

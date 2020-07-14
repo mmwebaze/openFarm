@@ -35,7 +35,7 @@ public class UserController {
 	        System.out.println("Id "+id);
 	        System.out.println(principal.getName());
 	        model.addAttribute("user", currentLoggedInUser);
-			model.addAttribute("roles", currentLoggedInUser.getRoles());
+			model.addAttribute("role", currentLoggedInUser.getRole());
 			
 			return "management/user/profile";
 	    }
@@ -44,7 +44,7 @@ public class UserController {
 			if (currentLoggedUserId.equals(id)) {
 				
 				model.addAttribute("user", currentLoggedInUser);
-				model.addAttribute("roles", currentLoggedInUser.getRoles());
+				model.addAttribute("role", currentLoggedInUser.getRole());
 				
 				return "management/user/profile";
 			}
@@ -54,7 +54,7 @@ public class UserController {
 			if (user == null) {
 				
 				model.addAttribute("user", currentLoggedInUser);
-				model.addAttribute("roles", currentLoggedInUser.getRoles());
+				model.addAttribute("roles", currentLoggedInUser.getRole());
 				
 				return "management/user/profile";
 			}
@@ -64,7 +64,7 @@ public class UserController {
 				System.out.println("###################################");
 				//User user = optionalEntity.get();
 				model.addAttribute("user", user);
-				model.addAttribute("roles", user.getRoles());
+				model.addAttribute("role", user.getRole());
 				
 				return "management/user/profile";
 			}

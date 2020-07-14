@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.authorizeRequests()
 		.antMatchers("/").permitAll()
 		.antMatchers("/account/create").permitAll()
+		.antMatchers("/install").permitAll()
 		.antMatchers("/dashboard/**").authenticated()
 		.antMatchers("/management/user/**").hasAuthority("MANAGER")
 		.antMatchers("/admin/**").hasAuthority("ADMIN")
@@ -44,11 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.loginPage("/login").permitAll()
 		.and()
 		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
-		
-		/*
-		 * httpSecurity.authorizeRequests() .anyRequest() .permitAll()
-		 * .and().csrf().disable();
-		 */
 	}
 	
 	@Override
@@ -74,14 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public AccessDeniedHandler accessDeniedHandler(){
+	public AccessDeniedHandler accessDeniedHandler() {
 	    return new OpenFarmAccessDeniedHandler();
 	}
-	
-//	protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//            .anyRequest()
-//            .permitAll()
-//            .and().csrf().disable();
-//    }
 }

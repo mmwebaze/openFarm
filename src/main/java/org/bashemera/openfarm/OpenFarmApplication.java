@@ -1,10 +1,9 @@
 package org.bashemera.openfarm;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import org.bashemera.openfarm.config.MongoConfig;
 import org.bashemera.openfarm.model.Animal;
 import org.bashemera.openfarm.model.AnimalType;
 import org.bashemera.openfarm.model.Farm;
@@ -19,8 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Import(MongoConfig.class)
 @SpringBootApplication
 public class OpenFarmApplication implements CommandLineRunner {
 
@@ -46,7 +47,7 @@ public class OpenFarmApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		/** TEST DAT NOT TO BE USED FOR PRODUCTION PURPOSES: Allowed roles ADMIN, MANAGER, DATA */
+		/** TEST DATA NOT TO BE USED FOR PRODUCTION PURPOSES: Allowed roles ADMIN, MANAGER, DATA **/
 		farmRepository.deleteAll();
 		roleRepository.deleteAll();
 		userRepository.deleteAll();
@@ -75,10 +76,7 @@ public class OpenFarmApplication implements CommandLineRunner {
 		AnimalType savedPig = animalTypeRepository.save(pig);
 		
 		System.out.println(savedPig);
-		
-		
-		
-		
+				
 		Role adminRole = roleRepository.findByName("ADMIN");
         if (adminRole == null) {
             Role newAdminRole = new Role();
@@ -99,10 +97,7 @@ public class OpenFarmApplication implements CommandLineRunner {
             james.setLastName("Jenkins");
             james.setEnabled(true);
             james.setPassword(bCryptPasswordEncoder.encode("12345678"));
-            Set<Role> jamesRoles = new HashSet<Role>();
-            jamesRoles.add(data);
-            jamesRoles.add(managerRole);
-            james.setRoles(jamesRoles);
+            
             james = userRepository.save(james);
             rwenyinaUsers.add(james);
             rwenyina.setEmployees(rwenyinaUsers);
@@ -113,10 +108,8 @@ public class OpenFarmApplication implements CommandLineRunner {
             mitch.setLastName("Jenkins");
             mitch.setEnabled(true);
             mitch.setPassword(bCryptPasswordEncoder.encode("admin123"));
-            Set<Role> roles = new HashSet<Role>();
-            //roles.add(data);
-            roles.add(admin);
-            mitch.setRoles(roles);
+            
+            mitch.setRole(managerRole);
             mitch = userRepository.save(mitch);
             rwembogoUsers.add(mitch);
             rwembogo.setEmployees(rwembogoUsers);

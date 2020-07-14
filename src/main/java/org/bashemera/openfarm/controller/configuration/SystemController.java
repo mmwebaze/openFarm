@@ -5,6 +5,9 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 import org.bashemera.openfarm.model.Config;
+import org.bashemera.openfarm.service.ConfigService;
+import org.bashemera.openfarm.service.SetupService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class SystemController {
+	
+	@Autowired
+	private ConfigService configService;
 	
 	@RequestMapping(value = "/system/access_denied", method = RequestMethod.GET)
 	public String farmConfiguration() {

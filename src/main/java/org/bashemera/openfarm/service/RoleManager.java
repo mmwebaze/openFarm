@@ -1,7 +1,6 @@
 package org.bashemera.openfarm.service;
 
-import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import org.bashemera.openfarm.model.Role;
 import org.bashemera.openfarm.model.User;
@@ -9,25 +8,22 @@ import org.bashemera.openfarm.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class RoleManager implements RoleService {
 	
 	@Autowired
 	RoleRepository roleRepository;
 	
+	/** Consider changing this to a filter or an interceptor*/
 	@Override
 	public boolean hasRole(User user, String roleName) {
-		Set<Role> roles = user.getRoles();
+		Role role = user.getRole();
 		
-		Iterator<Role> roleIterator = roles.iterator();
-		
-		while(roleIterator.hasNext()){ 
-			Role role = roleIterator.next();
-			
-			if (role.getName().compareToIgnoreCase(roleName) == 0) {
-				return true;
-			}
+		if (role.getName().compareToIgnoreCase(roleName) == 0) {
+			return true;
 		}
+		
 		return false;
 	}
 	
@@ -36,5 +32,10 @@ public class RoleManager implements RoleService {
 		
 		
 		return roleRepository.findByName(role.toUpperCase());
+	}
+	
+	public List<Role> bulkSave(List<Role> roles) {
+		
+		return roleRepository.saveAll(roles);
 	}
 }
